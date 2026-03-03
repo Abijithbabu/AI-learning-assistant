@@ -110,6 +110,7 @@ export async function generateCourseFromMaterials(courseId: string) {
 
       if (moduleData) {
         const lessonsToInsert = mod.lessons.map(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (lesson: any, lIndex: number) => ({
             module_id: moduleData.id,
             title: lesson.title,

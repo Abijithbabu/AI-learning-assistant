@@ -41,6 +41,7 @@ export async function sendMessage(courseId: string, message: string) {
     console.log(`[Chat] Top match similarity: ${chunks[0].similarity}`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const context = chunks?.map((c: any) => c.content).join("\n\n") || "";
 
   console.log(`[Chat] Context length: ${context.length} chars`);

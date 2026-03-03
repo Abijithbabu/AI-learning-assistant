@@ -43,7 +43,7 @@ export default async function DashboardPage() {
               className="group block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-xl overflow-hidden"
             >
               <div className="h-32 bg-gray-100 dark:bg-gray-700 relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-blue-500/20 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-tr from-purple-500/20 to-blue-500/20 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="p-5">
                 <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 transition-colors">

@@ -1,5 +1,5 @@
 -- =============================================
--- Quiz System Database Schema
+-- Quiz System Database Schema (Fixed for profiles table)
 -- =============================================
 
 -- Quiz table (one or more quizzes per course)
@@ -95,9 +95,9 @@ create policy "Admins can manage quizzes"
   on quizzes for all
   using (
     exists (
-      select 1 from users
-      where users.id = auth.uid()
-      and users.role = 'admin'
+      select 1 from profiles
+      where profiles.id = auth.uid()
+      and profiles.role = 'admin'
     )
   );
 
@@ -117,9 +117,9 @@ create policy "Admins can manage questions"
   on questions for all
   using (
     exists (
-      select 1 from users
-      where users.id = auth.uid()
-      and users.role = 'admin'
+      select 1 from profiles
+      where profiles.id = auth.uid()
+      and profiles.role = 'admin'
     )
   );
 
@@ -140,9 +140,9 @@ create policy "Admins can manage answer options"
   on answer_options for all
   using (
     exists (
-      select 1 from users
-      where users.id = auth.uid()
-      and users.role = 'admin'
+      select 1 from profiles
+      where profiles.id = auth.uid()
+      and profiles.role = 'admin'
     )
   );
 

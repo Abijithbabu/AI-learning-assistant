@@ -1,6 +1,6 @@
 import mammoth from "mammoth";
 
-// @ts-ignore
+// @ts-expect-error - pdf-parse has no type declarations
 import pdf from "pdf-parse/lib/pdf-parse.js";
 
 export async function extractTextFromPDF(buffer: Buffer): Promise<string> {

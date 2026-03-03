@@ -42,6 +42,7 @@ export async function getLessonContent(lessonId: string) {
 
   let context = "";
   if (chunks && chunks.length > 0) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     context = chunks.map((c: any) => c.content).join("\n\n");
   }
 

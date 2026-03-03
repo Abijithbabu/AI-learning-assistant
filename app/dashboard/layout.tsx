@@ -33,8 +33,9 @@ export default async function DashboardLayout({
               Database Setup Required
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              You are signed in, but your user profile wasn't found. This
-              usually means the <b>Database Schema</b> hasn't been applied yet.
+              You are signed in, but your user profile wasn&apos;t found. This
+              usually means the <b>Database Schema</b> hasn&apos;t been applied
+              yet.
             </p>
             <div className="bg-gray-100 dark:bg-gray-950 p-4 rounded-lg text-sm font-mono overflow-auto mb-6">
               <p className="text-gray-500 mb-2">
@@ -62,16 +63,11 @@ export default async function DashboardLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden md:flex flex-col">
         <div className="p-6">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold bg-linear-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
             AI Learning
           </h1>
           <p className="text-xs text-gray-500 mt-1 uppercase tracking-wider font-semibold">
             {profile.role === "admin" ? "Admin Portal" : "Student Portal"}
-            {profile.role !== "admin" && (
-              <span className="block text-[10px] normal-case text-gray-400 mt-1">
-                (Set role='admin' in DB to create courses)
-              </span>
-            )}
           </p>
         </div>
 

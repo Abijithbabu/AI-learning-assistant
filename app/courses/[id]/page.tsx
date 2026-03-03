@@ -9,8 +9,11 @@ import {
   Loader2,
   AlertTriangle,
   FileText,
+  ClipboardList,
+  MessageSquare,
 } from "lucide-react";
 import { redirect } from "next/navigation";
+import GenerateQuizButton from "./generate-quiz-button";
 
 export default async function CoursePage({
   params,
@@ -45,7 +48,9 @@ export default async function CoursePage({
   // Handle Empty State / Processing State
   if (!course.modules || course.modules.length === 0) {
     const materials = course.materials || [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const hasError = materials.some((m: any) => m.status === "error");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isProcessing = materials.some((m: any) =>
       ["pending", "processing"].includes(m.status),
     );
@@ -95,6 +100,7 @@ export default async function CoursePage({
                 lessons. This may take a moment.
               </p>
               <div className="mt-6 flex flex-col gap-2">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {materials.map((m: any) => (
                   <div
                     key={m.id}
@@ -118,8 +124,8 @@ export default async function CoursePage({
                 No Content Generated
               </h2>
               <p className="text-gray-500">
-                We couldn't generate a course from the provided materials. They
-                might be empty or unreadable.
+                We couldn&apos;t generate a course from the provided materials.
+                They might be empty or unreadable.
               </p>
             </div>
           )}
@@ -129,8 +135,11 @@ export default async function CoursePage({
   }
 
   // Sort modules and lessons
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   course.modules.sort((a: any, b: any) => a.order - b.order);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   course.modules.forEach((mod: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mod.lessons.sort((a: any, b: any) => a.order - b.order);
   });
 
@@ -152,6 +161,26 @@ export default async function CoursePage({
           <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed max-w-3xl">
             {course.description}
           </p>
+
+          {/* Quick Actions */}
+          <div className="flex items-center gap-4 mt-6">
+            <Link
+              href={`/courses/${id}/chat`}
+              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium shadow-sm"
+            >
+              <MessageSquare className="w-4 h-4" />
+              AI Tutor Chat
+            </Link>
+            <Link
+              href={`/courses/${id}/quizzes`}
+              className="flex items-center gap-2 px-4 py-2 border-2 border-purple-600 text-purple-600 dark:text-purple-400 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors text-sm font-medium"
+            >
+              <ClipboardList className="w-4 h-4" />
+              Take Quiz
+            </Link>
+            {profile?.role === "admin" && <GenerateQuizButton courseId={id} />}
+          </div>
+
           <div className="flex items-center gap-6 mt-6 text-sm text-gray-500 dark:text-gray-400">
             <div className="flex items-center">
               <BookOpen className="w-4 h-4 mr-2" />
@@ -165,6 +194,7 @@ export default async function CoursePage({
       {/* Content */}
       <div className="max-w-5xl mx-auto px-4 py-12">
         <div className="grid gap-8">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {course.modules.map((module: any) => (
             <div
               key={module.id}
@@ -176,6 +206,7 @@ export default async function CoursePage({
                 </h3>
               </div>
               <div className="divide-y divide-gray-100 dark:divide-gray-700">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {module.lessons.map((lesson: any) => (
                   <Link
                     key={lesson.id}

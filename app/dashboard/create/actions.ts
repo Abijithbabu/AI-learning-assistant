@@ -12,13 +12,18 @@ export async function createCourse(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
   // 1. Create Course
   const { data: course, error: courseError } = await supabase
     .from("courses")
     .insert({
       title,
       description,
-      creator_id: (await supabase.auth.getUser()).data.user?.id!,
+      creator_id: user.id,
     })
     .select()
     .single();

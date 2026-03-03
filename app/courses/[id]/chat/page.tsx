@@ -31,10 +31,12 @@ export default async function ChatPage({
     .eq("student_id", profile.id)
     .order("created_at", { ascending: true });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const typedHistory = (history || []) as any;
   return (
     <ChatInterface
       courseId={id}
-      initialMessages={(history || []) as any}
+      initialMessages={typedHistory}
       courseTitle={course.title}
     />
   );

@@ -12,3 +12,4 @@ BEGIN;
   -- We will rely on exact nearest neighbor search (sequential scan), which is fast enough for <100k rows.
   -- CREATE INDEX embeddings_embedding_idx ON embeddings USING ivfflat (embedding vector_cosine_ops);
 COMMIT;
+        
