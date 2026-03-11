@@ -17,6 +17,17 @@ export async function createCourse(formData: FormData) {
   } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");
 
+  // Fetch user role to determine course visibility
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  const isAdmin = profile?.role === "admin";
+  // Admin courses are public; student courses are private (only visible to creator)
+  const isPublic = isAdmin;
+
   // 1. Create Course
   const { data: course, error: courseError } = await supabase
     .from("courses")
@@ -24,6 +35,7 @@ export async function createCourse(formData: FormData) {
       title,
       description,
       creator_id: user.id,
+      is_public: isPublic,
     })
     .select()
     .single();
@@ -89,5 +101,13 @@ export async function createCourse(formData: FormData) {
   }
 
   revalidatePath("/dashboard");
-  redirect(`/dashboard`);
+  revalidatePath("/courses");
+
+  // Redirect students directly to their new private course;
+  // admins go back to dashboard overview
+  if (isAdmin) {
+    redirect(`/dashboard`);
+  } else {
+    redirect(`/courses/${course.id}`);
+  }
 }

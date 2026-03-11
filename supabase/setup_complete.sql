@@ -51,20 +51,26 @@ create table if not exists courses (
   title text not null,
   description text,
   creator_id uuid references profiles(id) not null,
+  is_public boolean not null default true, -- false = private (student-created)
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 alter table courses enable row level security;
 drop policy if exists "Courses are viewable by everyone." on courses;
-create policy "Courses are viewable by everyone." on courses for select using (true);
+drop policy if exists "Courses viewable by creator or if public" on courses;
+create policy "Courses viewable by creator or if public" on courses for select using (
+  is_public = true OR creator_id = auth.uid()
+);
 drop policy if exists "Admins can insert courses." on courses;
-create policy "Admins can insert courses." on courses for insert with check (
-  exists (select 1 from profiles where id = auth.uid() and role = 'admin')
+drop policy if exists "Authenticated users can insert courses." on courses;
+create policy "Authenticated users can insert courses." on courses for insert with check (
+  auth.uid() IS NOT NULL
 );
 drop policy if exists "Admins can update their courses." on courses;
-create policy "Admins can update their courses." on courses for update using (
-  creator_id = auth.uid() and exists (select 1 from profiles where id = auth.uid() and role = 'admin')
+drop policy if exists "Creators can update their courses." on courses;
+create policy "Creators can update their courses." on courses for update using (
+  creator_id = auth.uid()
 );
 
 -- 6. Modules Table
@@ -80,8 +86,9 @@ alter table modules enable row level security;
 drop policy if exists "Modules viewable by everyone" on modules;
 create policy "Modules viewable by everyone" on modules for select using (true);
 drop policy if exists "Admins can insert modules" on modules;
-create policy "Admins can insert modules" on modules for insert with check (
-  exists (select 1 from profiles where id = auth.uid() and role = 'admin')
+drop policy if exists "Course creators can insert modules" on modules;
+create policy "Course creators can insert modules" on modules for insert with check (
+  exists (select 1 from courses where id = modules.course_id and creator_id = auth.uid())
 );
 
 -- 7. Lessons Table
@@ -99,8 +106,12 @@ alter table lessons enable row level security;
 drop policy if exists "Lessons viewable by everyone" on lessons;
 create policy "Lessons viewable by everyone" on lessons for select using (true);
 drop policy if exists "Admins can insert lessons" on lessons;
-create policy "Admins can insert lessons" on lessons for insert with check (
-  exists (select 1 from profiles where id = auth.uid() and role = 'admin')
+drop policy if exists "Course creators can insert lessons" on lessons;
+create policy "Course creators can insert lessons" on lessons for insert with check (
+  exists (
+    select 1 from modules m join courses c on c.id = m.course_id
+    where m.id = lessons.module_id and c.creator_id = auth.uid()
+  )
 );
 
 -- 8. Materials Table
@@ -121,8 +132,9 @@ create policy "Materials viewable by course creator" on materials for select usi
    exists (select 1 from courses where id = materials.course_id and creator_id = auth.uid())
 );
 drop policy if exists "Admins can insert materials" on materials;
-create policy "Admins can insert materials" on materials for insert with check (
-   exists (select 1 from profiles where id = auth.uid() and role = 'admin')
+drop policy if exists "Course creators can insert materials" on materials;
+create policy "Course creators can insert materials" on materials for insert with check (
+   exists (select 1 from courses where id = materials.course_id and creator_id = auth.uid())
 );
 
 -- 9. Embeddings Table

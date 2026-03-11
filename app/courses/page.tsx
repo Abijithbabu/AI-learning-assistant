@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserProfile } from "@/lib/data";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Lock } from "lucide-react";
 
 export default async function DashboardPage() {
   const profile = await getUserProfile();
@@ -13,7 +13,7 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-4">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -23,15 +23,14 @@ export default async function DashboardPage() {
             Welcome back, {profile?.email}
           </p>
         </div>
-        {profile?.role === "admin" && (
-          <Link
-            href="/dashboard/create"
-            className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/20"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            New Course
-          </Link>
-        )}
+        {/* New Course button visible to all users */}
+        <Link
+          href="/dashboard/create"
+          className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/20"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          New Course
+        </Link>
       </div>
 
       {courses && courses.length > 0 ? (
@@ -46,9 +45,17 @@ export default async function DashboardPage() {
                 <div className="absolute inset-0 bg-linear-to-tr from-purple-500/20 to-blue-500/20 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="p-5">
-                <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-purple-600 transition-colors">
-                  {course.title}
-                </h3>
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors">
+                    {course.title}
+                  </h3>
+                  {!course.is_public && (
+                    <span className="flex items-center gap-1 text-xs px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full shrink-0 font-medium">
+                      <Lock className="w-3 h-3" />
+                      Private
+                    </span>
+                  )}
+                </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                   {course.description || "No description provided."}
                 </p>
@@ -72,14 +79,12 @@ export default async function DashboardPage() {
           <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
             Get started by creating your first course.
           </p>
-          {profile?.role === "admin" && (
-            <Link
-              href="/dashboard/create"
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-            >
-              Create Course
-            </Link>
-          )}
+          <Link
+            href="/dashboard/create"
+            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Create Course
+          </Link>
         </div>
       )}
     </div>

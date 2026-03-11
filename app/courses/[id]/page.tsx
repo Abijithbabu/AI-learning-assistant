@@ -11,6 +11,7 @@ import {
   FileText,
   ClipboardList,
   MessageSquare,
+  Lock,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import GenerateQuizButton from "./generate-quiz-button";
@@ -178,7 +179,11 @@ export default async function CoursePage({
               <ClipboardList className="w-4 h-4" />
               Take Quiz
             </Link>
-            {profile?.role === "admin" && <GenerateQuizButton courseId={id} />}
+            {/* Show Generate Quiz button to admins and course creators */}
+            {(profile?.role === "admin" ||
+              course.creator_id === profile?.id) && (
+              <GenerateQuizButton courseId={id} />
+            )}
           </div>
 
           <div className="flex items-center gap-6 mt-6 text-sm text-gray-500 dark:text-gray-400">
@@ -186,7 +191,13 @@ export default async function CoursePage({
               <BookOpen className="w-4 h-4 mr-2" />
               {course.modules.length} Modules
             </div>
-            {/* Download/Resource links can go here */}
+            {/* Private course indicator */}
+            {!course.is_public && (
+              <span className="flex items-center gap-1.5 px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium">
+                <Lock className="w-3.5 h-3.5" />
+                Private Course — only visible to you
+              </span>
+            )}
           </div>
         </div>
       </div>
