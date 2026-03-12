@@ -3,6 +3,7 @@ import { getUserProfile } from "@/lib/data";
 import { LogOut, BookOpen, PlusCircle, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import Navbar from "../components/Navbar";
 
 export default async function DashboardLayout({
   children,
@@ -59,7 +60,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
       {/* Sidebar */}
       <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden md:flex flex-col">
         <div className="p-6">
@@ -108,7 +109,10 @@ export default async function DashboardLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-4 md:p-8">{children}</main>
+      <div className="flex-1 w-full overflow-y-scroll">
+        <Navbar />
+        <main className="p-4 md:p-8">{children}</main>
+      </div>
     </div>
   );
 }

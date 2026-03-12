@@ -13,23 +13,23 @@ export default async function DashboardPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6 p-4 md:px-12">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Overview
+            My Courses
           </h2>
           <p className="text-gray-500 dark:text-gray-400">
-            Welcome back, {profile?.email}
+            Explore all courses both in your syllabus and you have created
           </p>
         </div>
         {/* New Course button visible to all users */}
         <Link
           href="/dashboard/create"
-          className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/20"
+          className="flex items-center p-2 md:px-4 gap-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/20"
         >
-          <Plus className="w-4 h-4 mr-2" />
-          New Course
+          <Plus className="w-5 h-5" />
+          <p className="hidden md:block">New Course</p>
         </Link>
       </div>
 
