@@ -62,7 +62,19 @@ export async function signup(formData: FormData) {
 export async function signInWithGoogle() {
   const supabase = await createClient();
   const headersList = await headers();
-  const origin = headersList.get("origin") || "http://localhost:3000";
+
+  // Priority:
+  // 1. NEXT_PUBLIC_BASE_URL — explicitly set in Vercel env vars (most reliable)
+  // 2. x-forwarded-host + x-forwarded-proto — set by Vercel's load balancer
+  // 3. Localhost fallback for local dev
+  const siteUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const forwardedHost = headersList.get("x-forwarded-host");
+  const forwardedProto = headersList.get("x-forwarded-proto") || "https";
+  const origin =
+    siteUrl ||
+    (forwardedHost
+      ? `${forwardedProto}://${forwardedHost}`
+      : "http://localhost:3000");
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
