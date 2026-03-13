@@ -94,7 +94,7 @@ export default async function DashboardPage() {
           </Link>
         </div>
       )}
-      {systemCourses && systemCourses.length > 0 && (
+      {/* {systemCourses && systemCourses.length > 0 && (
         <div className="space-y-6">
           <hr className="border-gray-200 dark:border-gray-700" />
           <div>
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
