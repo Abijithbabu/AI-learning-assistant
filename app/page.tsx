@@ -1,14 +1,7 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  BookOpen,
-  Brain,
-  Sparkles,
-  Zap,
-  Shield,
-  Users,
-} from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Brain, Sparkles, Zap, Shield, Users } from "lucide-react";
+import WorkflowSection from "./components/WorkflowSection";
+import ScrollToButton from "./components/ScrollToButton";
 
 export default function Home() {
   return (
@@ -23,7 +16,7 @@ export default function Home() {
         {/* Navigation */}
         <nav className="flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-linear-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
               <Brain className="w-5 h-5 text-white" />
             </div>
             <span className="font-bold text-xl tracking-tight">
@@ -54,31 +47,34 @@ export default function Home() {
                 <Sparkles className="w-3 h-3" />
                 Next Gen Education
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-400">
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tighter bg-clip-text text-transparent bg-linear-to-r from-white via-gray-200 to-gray-400">
                 Turn Content into <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-400 to-blue-500">
                   Interactive Courses
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-gray-400 max-w-xl leading-relaxed">
-                Upload your PDFs, Videos, and Docs. Our AI instantly structures
-                them into comprehensive lessons and acts as a 24/7 personal
-                tutor.
+              <p className="text-md md:text-xl text-gray-400 max-w-xl leading-relaxed">
+                Users can create an account and start by adding a new course
+                using their own study resources such as notes, documents, or
+                learning materials. The platform organizes these resources into
+                a structured course for easier learning. After studying the
+                course content, users can take mock tests to evaluate their
+                understanding and track their progress.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
                   href="/dashboard"
-                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:-translate-y-1"
+                  className="px-8 py-4 bg-linear-to-r from-purple-600 to-blue-600 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:-translate-y-1"
                 >
                   Start Learning Now
                 </Link>
-                <Link
-                  href="#features"
-                  className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors backdrop-blur-sm"
+                <ScrollToButton
+                  targetId="workflow"
+                  className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl font-bold text-lg hover:bg-white/10 transition-colors backdrop-blur-sm cursor-pointer"
                 >
                   Watch Demo
-                </Link>
+                </ScrollToButton>
               </div>
 
               <div className="flex items-center gap-4 text-sm text-gray-400 pt-8">
@@ -98,7 +94,7 @@ export default function Home() {
 
             {/* Hero Visual */}
             <div className="relative hidden md:block group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-1000"></div>
+              <div className="absolute -inset-1 bg-linear-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-1000"></div>
               <div className="relative rounded-2xl border border-white/10 bg-gray-900/50 backdrop-blur-xl p-6 shadow-2xl">
                 <div className="space-y-4">
                   {/* Mock UI */}
@@ -128,7 +124,9 @@ export default function Home() {
             </div>
           </div>
         </main>
-
+        <div id="workflow">
+          <WorkflowSection />
+        </div>
         {/* Features Grid */}
         <section
           id="features"
@@ -163,6 +161,23 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <footer>
+          <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row justify-between">
+            <div className="mb-12">
+              <h2 className="text-md md:text-xl font-bold">
+                Powered by Advanced AI
+              </h2>
+              <p className="text-gray-400">
+                Everything you need to master any subject.
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-400 text-sm md:text-md">
+                AI Learning Assistant © 2026
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

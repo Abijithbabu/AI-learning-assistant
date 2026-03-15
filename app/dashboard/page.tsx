@@ -27,7 +27,7 @@ export default async function DashboardPage() {
             Overview
           </h2>
           <p className="text-gray-500 dark:text-gray-400">
-            Welcome back, {profile?.email}
+            Welcome {profile?.email}
           </p>
         </div>
         {/* New Course button visible to all users */}

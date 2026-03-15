@@ -1,8 +1,8 @@
 {
   "name": "AI Learning Assistant",
-  "short_name": "AI Learn",
+  "short_name": "AI Learning",
   "description": "Your personal AI-powered learning assistant",
-  "start_url": "/dashboard",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0F172A",
   "theme_color": "#7C3AED",

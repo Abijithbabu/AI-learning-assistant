@@ -25,7 +25,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-              Welcome Back
+              Welcome
             </h1>
             <p className="text-gray-400 text-sm mt-2">
               Sign in to continue your learning journey
